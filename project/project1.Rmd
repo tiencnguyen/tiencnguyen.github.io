@@ -1,0 +1,199 @@
+---
+title: 'Project 1: Exploratory Data Analysis'
+author: "SDS348 - Tien Nguyen (tcn459)"
+date: 'March 31, 2021'
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+  pdf_document:
+    toc: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducton
+I will be analyzing figure skating data from the 2018 Winter Olympics. I will be looking at two datasets: performances and scores. The performances dataset contains performance ID, program name, name of the skater, the home country of the skater, the final place the skater finished, the order in which the skater skated, the total score for the program, the total score of all elements in the program, the total score of all components in the program, and the total deductions for the performance. The scores dataset contains performance ID, aspect ID, the shorthand notation of the aspect, a marking by the technical panel for an under-rotated jump, whether the skater received credit for highlight distribution for an element, the base number of points for the performed element, the overall grade of execution, and the judging panel's total score for the aspect. These datasets were collected by Buzzfeed and acquired from github. I chose these datasets because I love watching competitive figure skating. The Olympics is the most intense competition for many athletes, figure skates included, and I wanted to analyze performance data for this competition. I expect to find that skaters from countries historically known to be strong in figure skating (Japan, Russia, etc.) will have the highest total program scores, GOE's and more technically difficult performances. 
+
+## Tidying
+```{r}
+library(tidyverse)
+score <- readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-02-olympic-figure-skating-analysis/master/data/judged-aspects.csv")
+performances <- readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-02-olympic-figure-skating-analysis/master/data/performances.csv")
+
+scores <- score %>% pivot_wider(names_from="section", values_from="aspect_desc")
+scores %>% head(10)
+```
+To tidy my scores dataset, I used pivot_wider and took the names from the section column and took the values from the names in the aspect description column. I did this to make my data easier to visualize, since it allowed me to see the name of the aspect of the skating program that was scored, and whether this aspect was an element or a component.
+
+## Joining
+
+```{r}
+olympics_skating <- scores %>% left_join(performances, by = "performance_id")
+```
+To join my two datasets, I used a left join and combined the datasets based on performance ID. The scores dataset had 3405 observations with 12 variables, and the performances dataset had 250 observations with 11 variables. After I combined the two datasets, the new dataset contained 3405 observations and 22 variables. No observations were lost in this join because the variables and data cells from the performances dataset were simply added to the end of the scores dataset. I chose to do a left join because I wanted to retain all of the data in the scores dataset, and add performance ID matches from the performances dataset.
+
+## Wrangling
+
+```{r}
+skating <- olympics_skating %>% select(-c("competition", "aspect_num", "factor", "ref")) %>% 
+  separate(program,into=c("discipline", "program"), sep="-")
+
+```
+I removed the competition column since all of these skating performances occurred during the 2018 Olympic Winter Games, and it was unnecessary information. I also removed the aspect number column which is the positional order of the aspect within the performance and section. This was not necessary for my analysis since I was mostly concerned with scores and positional number of a performed element or sequence doesn't affect skating scores. I removed the factor column because this column simply represents the amount by which the component score is multiplied to calculate its final value; this information is not need for my analysis. Lastly, I removed the ref column which just includes a reference to the source PDF. This was also not needed. I separated the programs column, which contained information about the discipline and program type of the skating performance, into two separate columns.
+
+```{r}
+skating_base_value <- skating %>% group_by(nation) %>%
+  summarize(mean_base_value=mean(base_value, na.rm=T), 
+  sd_base_value=sd(base_value, na.rm=T), n=n(), 
+  se_base_value=sd_base_value/sqrt(n), 
+  min_base_value=min(base_value, na.rm=T),
+  max_base_value=max(base_value, na.rm=T), 
+  median_base_value=median(base_value, na.rm=T))
+skating_base_value %>% arrange(desc(max_base_value))
+  
+skating_goe <- skating %>% group_by(nation) %>%
+  summarize(mean_goe=mean(goe, na.rm=T), 
+  sd_goe=sd(goe, na.rm=T), n=n(), 
+  se_goe=sd_goe/sqrt(n), 
+  min_goe=min(goe, na.rm=T),
+  max_goe=max(goe, na.rm=T), 
+ median_goe=median(goe, na.rm=T))
+skating_goe %>% arrange(desc(mean_goe))
+
+skating_scores_of_panel <- skating %>% group_by(nation) %>%
+  summarize(mean_scores_of_panel=mean(scores_of_panel, na.rm=T), 
+  sd_scores_of_panel=sd(scores_of_panel, na.rm=T), n=n(), 
+  se_scores_of_panel=sd_scores_of_panel/sqrt(n), 
+  min_scores_of_panel=min(scores_of_panel, na.rm=T),
+  max_scores_of_panel=max(scores_of_panel, na.rm=T), 
+  median_scores_of_panel=median(scores_of_panel, na.rm=T))
+skating_scores_of_panel %>% head(10)
+
+skating_total_segment_score <- skating %>% group_by(name, nation) %>%
+  summarize(mean_total_segment_score=mean(total_segment_score, na.rm=T), 
+  sd_total_segment_score=sd(total_segment_score, na.rm=T), n=n(), 
+  se_total_segment_score=sd_total_segment_score/sqrt(n), 
+  min_total_segment_score=min(total_segment_score, na.rm=T),
+  max_total_segment_score=max(total_segment_score, na.rm=T), 
+  median_total_segment_score=median(total_segment_score, na.rm=T))
+skating_total_segment_score %>% arrange(desc(mean_total_segment_score))
+
+skating_total_component_score <- skating %>% group_by(name, nation) %>%
+  summarize(mean_total_component_score=mean(total_component_score, na.rm=T), 
+  sd_total_component_score=sd(total_component_score, na.rm=T), n=n(), 
+  se_total_component_score=sd_total_component_score/sqrt(n), 
+  min_total_component_score=min(total_component_score, na.rm=T),
+  max_total_component_score=max(total_component_score, na.rm=T),
+  median_total_component_score=median(total_component_score, na.rm=T))
+skating_total_component_score %>% arrange(desc(mean_total_component_score))
+
+skating_total_element_score <- skating %>% group_by(name, nation) %>%
+  summarize(mean_total_element_score=mean(total_element_score, na.rm=T), 
+  sd_total_element_score=sd(total_element_score, na.rm=T), n=n(), 
+  se_total_element_score=sd_total_element_score/sqrt(n), 
+  min_total_element_score=min(total_element_score, na.rm=T),
+  max_total_element_score=max(total_element_score, na.rm=T), 
+  median_total_element_score=median(total_element_score, na.rm=T))
+skating_total_element_score %>% arrange(desc(max_total_element_score))
+
+skating_total_deductions <- skating %>% group_by(starting_number) %>%
+  summarize(mean_total_deductions=mean(total_deductions, na.rm=T), 
+  sd_total_deductions=sd(total_deductions, na.rm=T), n=n(), 
+  se_total_deductions=sd_total_deductions/sqrt(n), 
+  min_total_deductions=min(total_deductions, na.rm=T),
+  max_total_deductions=max(total_deductions, na.rm=T), 
+  median_total_deductions=median(total_deductions, na.rm=T))
+skating_total_deductions %>% head(30)
+
+```
+I computed summary statistics for seven of my numeric variables: base value, goe, panel scores, segment score, component score, element score and total deductions. For base value, goe, and panel scores, I grouped by nation. For segment score, component score and element score, I grouped by figure skater name(s) and nation. For total deductions given by the technical panel for the performance, I grouped by starting number, which is the order the skater skated in. The specific summary statistics I used were mean, standard deviation, count, standard error, minimum, maximum and median.
+
+China, the United States and Russia had the highest max base value, meaning that at least one figure skater from each of these countries attempted the most difficult trick among all other countries at the 2018 Olympics. Yuzuru Hanyu of Japan had the highest mean total program score of all the skaters. USA figure skater Nathan Chen had the highest maximum element score of all skaters, meaning that one of his skates at the 2018 Olympics was scored the highest for its technical performance. Yuzuru Hanyu had the highest maximum component score of all skaters, which means one of his skates was scored the highest for skating skills, transitions, performance, composition and interpretation collectively. Great Britain had the highest mean grade of execution (GOE's) points among all the countries, meaning their skaters on average executed their performances the best at the 2018 Olympics. Lastly, it was interesting to see that skaters who performed near the end, i.e., 23rd, 25th, 28th, 29th, had no deductions. 
+
+```{R}
+skating %>% filter(nation=="USA") %>%
+  select(name, elements, scores_of_panel) %>%
+  arrange(desc(scores_of_panel))
+```
+I wanted to know the highest aspect score for an element given to a USA figure skater during the 2018 Olympics. Vincent Zhou received the highest aspect score for an element among USA figure skaters for his quad lutz-triple toe.
+
+
+```{R}
+skating %>% filter(rank=="1") %>% 
+  group_by(name) %>% 
+  summarize(mean_total_score_fsl=mean(total_segment_score))
+```
+I wanted to see which figure skater, who receive a gold medal, had the highest mean total program score. Patrick Chan had the highest mean total program score of 179.75.
+
+
+```{R}
+skating %>% mutate(score_percentil = ntile(total_segment_score,100))
+```
+I used mutate to create a new variable that gives the percentile of a skater's total segment/program score.
+
+```{R}
+
+cormat <- skating %>% select_if(is.numeric) %>% na.omit() %>% cor(use = "pair")
+cormat
+
+```
+Lastly, I computed a correlation matrix of the numeric variables in my combined dataset.
+
+## Visualizing
+
+```{R}
+tidycor <- cormat %>% as.data.frame %>% rownames_to_column("var1") %>% pivot_longer(-1,names_to="var2", values_to="correlation")
+
+tidycor %>% ggplot(aes(var1, var2, fill=correlation)) + geom_tile() + scale_fill_gradient2(low="red", mid="white", high="blue") + geom_text(aes(label=round(correlation, 2)), color="black", size=4) + ggtitle("Correlation Heat Map") + xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 20, hjust=1)) + coord_fixed()
+```
+I created a correlation heat map to show the relationships between the numeric variables in the skating dataset. The two variables with the largest negative correlation of -.39 is the total element score and the rank a skater placed in the Olympics. The two variables with the largest positive correlation of 0.98 is total segment score and total component score.
+
+```{R}
+
+ggplot(skating, aes(x=nation, fill=discipline)) + theme_dark() + scale_fill_manual(name = "Discipline", values = c("#FFDB6D","#F5CCB5","#C3D7A4","#C4B5F5", "#6FDEE9")) + theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_bar(aes(y=total_segment_score), position="dodge", stat="summary", fun=mean) + ggtitle("Mean Total Program Score by Nation and Discipline") + xlab("Nation") + ylab("Mean Total Program Score") + scale_y_continuous(breaks=seq(0,175,25))
+
+```
+I created a bar plot of the average total program score based nation and discipline. The y-axis shows mean total program score, the x-axis shows the corresponding nation and the color/legend indicates the discipline. I found that there were many nations that only participated in certain disciplines such as pair skating or mens single skating. I saw that only a few countries participated in team events and the ones who did also competed in most or all of the other disciplines as well. Across all nations, mens single skating mean total program scores are the highest among the disciplines. Lastly, nations who have high mean total program scores are countries who compete in multiple disciplines.
+
+```{R}
+ggplot(skating, aes(x=total_component_score, y=total_element_score, color=rank)) + geom_point(size=1) + theme_light() + scale_color_continuous(name="Rank") + scale_y_continuous(breaks = seq(0, 150, 20)) + ggtitle("Total Element Score vs. Total Component Score by Rank") + ylab("Total Element Score") + xlab("Total Component Score") + scale_color_gradient(low='greenyellow', high ='forestgreen')
+
+```
+I created a scatterplot of total element score vs. total component score by final place in the program (what the figure skater placed). I found that there was a positive correlation between total element score and total component score. This means that a skater with a low element score is likely to have a low component score as well. There are a few outliers where some skaters who placed high in their program had much higher element scores than component scores. Lastly, skaters who placed higher had higher component and element scores as indicated by their being more light green dots as you go up and towards the right of the plot.
+
+## Dimensionality Reduction
+```{R}
+library(cluster)
+pam_data <- skating %>% select(total_component_score, total_element_score, total_deductions, total_segment_score)
+
+pam1 <- pam_data %>% scale %>% pam(k=2)
+
+pam1$silinfo$avg.width
+```
+
+```{R}
+
+pamclust <- pam_data %>% mutate(cluster=as.factor(pam1$clustering))
+
+pamclust %>% group_by(cluster) %>% summarize_if(is.numeric, mean, 
+    na.rm = T)
+
+skating %>% slice(pam1$id.med)
+
+```
+```{R}
+
+pamclust %>% ggplot(aes(total_component_score, total_element_score, total_deductions, total_segment_score, 
+    color = cluster)) + geom_point()
+
+library(GGally)
+pamclust %>% ggpairs(columns = c("total_component_score","total_element_score","total_deductions","total_segment_score"), aes(color=cluster))
+
+```
+
+To conduct PAM clustering analysis, I used the silhouette method to identify the number of clusters. I got the largest average silhoutte width of 0.52 when k=2, which is a reasonable structure. Therefore, I chose to do 2 clusters. I did PAM analysis on four variables: total_component_score, total_element_score, total_deductions and total_segment_score. The two medoids I got were Vanessa James / Morgan Cipres (pair skating) and Julian Zhi Jie Yee (men singles skating). The first cluster represents those with higher element, component and segment scores as well as higher total deductions. The second cluster represents those with lower element, component and segment scores as well as lower total deductions.

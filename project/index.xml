@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Chris Turner</title>
+    <link>/project/</link>
+    <description>Recent content in Projects on Chris Turner</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language><atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Project 1: Exploratory Data Analysis</title>
+      <link>/project/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project1/</guid>
+      <description>Introducton I will be analyzing figure skating data from the 2018 Winter Olympics. I will be looking at two datasets: performances and scores. The performances dataset contains performance ID, program name, name of the skater, the home country of the skater, the final place the skater finished, the order in which the skater skated, the total score for the program, the total score of all elements in the program, the total score of all components in the program, and the total deductions for the performance.</description>
+    </item>
+    
+  </channel>
+</rss>
