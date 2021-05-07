@@ -1,0 +1,41 @@
++++
+title = "R and Python Chat"
+description = "Using the reticulate package to use python in R."
+tags = []
+categories = []
++++
+
+```{R}
+library(reticulate)
+hi <- "Good"
+```
+
+```{python}
+hi="afternoon!"
+print(r.hi, hi)
+```
+
+```{R}
+cat(c(hi,py$hi))
+knock <- "knock"
+```
+```{python}
+knock = "knock"
+print(r.knock, knock)
+who = "who's there?"
+```
+
+```{R}
+cat(c(py$who))
+python <- "python"
+```
+
+```{python}
+python = "python"
+print(r.python)
+snake = "ah! a snake!"
+```
+
+```{R}
+cat(c(py$snake))
+```
