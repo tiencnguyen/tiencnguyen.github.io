@@ -1,0 +1,102 @@
+---
+title: "Introduction to Python and R"
+date: "2021-05-07" 
+description: ""
+tags: []
+categories: []
+---
+
+![](/img/cat.jpg)
+
+Hey friends.
+
+Today, I wanted to talk about two coding languages I learned in my Computational Biology course in Spring 2021.
+
+## R
+The first language I learned was R, which I had past familiarity with. R is useful for data analysis and working with large data sets. I actually use R frequently in my research lab where we study gut and vaginal microbiomes. You can check out two projects I did using R, under "Projects" in the navigation bar.
+
+## Python
+
+The second language I learned was python. I learned how to do basic functions with python such as indexing and slicing, as seen below.
+
+```{python}
+list1=[2,4,6,8,10]
+list2=['a','b','c','d', 'e']
+list1[-2] #second to last element
+
+plist=list(range(20))
+plist
+plist[::-5] #Grab every fifth element in reverse
+```
+
+I also learned how to create loops using python.
+
+```{python}
+#loop with an index
+mylist = ['dog', 'cat', 'bunny', 'frog', 'turtle', 'bird', 'mouse']
+for i in range(len(mylist)):
+    print(mylist[i])
+```
+
+```{python}
+#loop over a string
+for letter in "hi my name is tien":
+    print(letter)
+```
+
+I also learned how to read in datasets, view them and analyze them using python. Below, I used the figure skating dataset from my Project 1.
+
+```{R}
+library(reticulate)
+```
+
+```{python}
+import pandas as pd
+import numpy as np
+skate=pd.read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-02-olympic-figure-skating-analysis/master/data/judged-aspects.csv",index_col=0)
+skate.head()
+skate.shape
+
+skate["goe"] > 2
+```
+
+Finally, I used the reticulate package in R to demonstrate how python and R can talk to each other and share information across code chunks.
+
+By using alternating R and python code chunks, I created a joke exchange between the two. This is a more simple use of reticulate and much more complex things can be done using a combination of R and python. Regardless, please enjoy!
+
+```{R}
+library(reticulate)
+hi <- "Good"
+```
+
+```{python}
+hi="afternoon!"
+print(r.hi, hi)
+```
+
+```{R}
+cat(c(hi,py$hi))
+knock <- "knock"
+```
+```{python}
+knock = "knock"
+print(r.knock, knock)
+who = "who's there?"
+```
+
+```{R}
+cat(c(py$who))
+python <- "python"
+```
+
+```{python}
+python = "python"
+print(r.python)
+snake = "ah! a snake!"
+```
+
+```{R}
+cat(c(py$snake))
+```
+
+![](/img/snake.jpg)

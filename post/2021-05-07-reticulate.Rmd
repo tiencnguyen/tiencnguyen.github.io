@@ -1,9 +1,14 @@
-+++
-title = "R and Python Chat"
-description = "Using the reticulate package to use python in R."
-tags = []
-categories = []
-+++
+---
+title: "R and Python Chat With Reticulate"
+date: "2021-05-07"
+description: "Using the reticulate package to use python in R."
+tags: []
+categories: []
+---
+
+I used the reticulate package in R to demonstrate how python and R can talk to each other and share information across code chunks.
+
+By using alternation R and python code chunks, I created a joke exchange between the two. This is a more simple use of reticulate and much more complex things can be done using a combination of R and python. Regardless, please enjoy!
 
 ```{R}
 library(reticulate)
@@ -39,3 +44,5 @@ snake = "ah! a snake!"
 ```{R}
 cat(c(py$snake))
 ```
+
+![](/img/snake.jpg)

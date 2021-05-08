@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tien Nguyen</title>
-    <link>/</link>
-    <description>Recent content on Tien Nguyen</description>
+    <title>Projects on Tien Nguyen</title>
+    <link>/projects/</link>
+    <description>Recent content in Projects on Tien Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Fri, 07 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Introduction to Python and R</title>
-      <link>/post/2021/05/07/introduction-to-python-and-r/</link>
-      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2021/05/07/introduction-to-python-and-r/</guid>
-      <description>Hey friends.
-Today, I wanted to talk about two coding languages I learned in my Computational Biology course in Spring 2021.
-R The first language I learned was R, which I had past familiarity with. R is useful for data analysis and working with large data sets. I actually use R frequently in my research lab where we study gut and vaginal microbiomes. You can check out two projects I did using R, under “Projects” in the navigation bar.</description>
-    </item>
-    
+    <language>en-US</language><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Project 1: Exploratory Data Analysis</title>
       <link>/projects/project1/</link>
@@ -34,27 +22,6 @@ R The first language I learned was R, which I had past familiarity with. R is us
       
       <guid>/projects/project2/</guid>
       <description>0. Introduction My project involves conducting statistical tests in Hass avocado sales between 2015-2018 to uncover any statistical significance among the variables in the dataset. This was done by analyzing relationships between these variables. The avocado dataset contains 18249 observations and 14 variables. The main numeric variables I looked at were average price of a single avocado, the total volume (number) of avocados sold, how many avocados sold were PLU 4046, PLU 4225, and PLU 4770, the total number of bags sold, the total number of small bags sold, the total number of large bags sold, and the total number of extra large bags sold.</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/</guid>
-      <description> Check out some of my coding projects below:
- Wrangling &amp;amp; Exploratory Data Analysis
- Modeling, Inference, Prediction
-  -- </description>
-    </item>
-    
-    <item>
-      <title>Resume</title>
-      <link>/resume/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/resume/</guid>
-      <description>    </description>
     </item>
     
   </channel>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Tien Nguyen" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../img/favicon.ico">
+    <title>Introduction to Python and R</title>
+    <meta name="generator" content="Hugo 0.83.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../../../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../../../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../../../../../post/">BLOG</a></li>
+        
+        <li><a href="../../../../../projects/">PROJECTS</a></li>
+        
+        <li><a href="../../../../../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../../../../../post/2021/05/07/introduction-to-python-and-r/">Introduction to Python and R</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         May 7, 2021 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<p><img src="../../../../../img/cat.jpg" /></p>
+<p>Hey friends.</p>
+<p>Today, I wanted to talk about two coding languages I learned in my Computational Biology course in Spring 2021.</p>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>The first language I learned was R, which I had past familiarity with. R is useful for data analysis and working with large data sets. I actually use R frequently in my research lab where we study gut and vaginal microbiomes. You can check out two projects I did using R, under “Projects” in the navigation bar.</p>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>The second language I learned was python. I learned how to do basic functions with python such as indexing and slicing, as seen below.</p>
+<pre class="python"><code>list1=[2,4,6,8,10]
+list2=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;, &#39;e&#39;]
+list1[-2] #second to last element</code></pre>
+<pre><code>## 8</code></pre>
+<pre class="python"><code>plist=list(range(20))
+plist</code></pre>
+<pre><code>## [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</code></pre>
+<pre class="python"><code>plist[::-5] #Grab every fifth element in reverse</code></pre>
+<pre><code>## [19, 14, 9, 4]</code></pre>
+<p>I also learned how to create loops using python.</p>
+<pre class="python"><code>#loop with an index
+mylist = [&#39;dog&#39;, &#39;cat&#39;, &#39;bunny&#39;, &#39;frog&#39;, &#39;turtle&#39;, &#39;bird&#39;, &#39;mouse&#39;]
+for i in range(len(mylist)):
+    print(mylist[i])</code></pre>
+<pre><code>## dog
+## cat
+## bunny
+## frog
+## turtle
+## bird
+## mouse</code></pre>
+<pre class="python"><code>#loop over a string
+for letter in &quot;hi my name is tien&quot;:
+    print(letter)</code></pre>
+<pre><code>## h
+## i
+##  
+## m
+## y
+##  
+## n
+## a
+## m
+## e
+##  
+## i
+## s
+##  
+## t
+## i
+## e
+## n</code></pre>
+<p>I also learned how to read in datasets, view them and analyze them using python. Below, I used the figure skating dataset from my Project 1.</p>
+<pre class="r"><code>library(reticulate)</code></pre>
+<pre class="python"><code>import pandas as pd
+import numpy as np
+skate=pd.read_csv(&quot;https://raw.githubusercontent.com/BuzzFeedNews/2018-02-olympic-figure-skating-analysis/master/data/judged-aspects.csv&quot;,index_col=0)
+skate.head()</code></pre>
+<pre><code>##            performance_id     section  aspect_num  ...   goe ref scores_of_panel
+## aspect_id                                          ...                          
+## 004e382688     648ff2cbff    elements         2.0  ...  0.80 NaN            6.60
+## 005bdf4588     5458eddc1d    elements         3.0  ... -2.71 NaN            5.49
+## 0070f9cc40     c39eade62e  components         NaN  ...   NaN NaN            6.29
+## 0071f2e3ae     cb67dacba3  components         NaN  ...   NaN NaN            7.25
+## 007ae3fc4b     9e771ce55d    elements         3.0  ...  1.90 NaN            8.50
+## 
+## [5 rows x 11 columns]</code></pre>
+<pre class="python"><code>skate.shape</code></pre>
+<pre><code>## (3405, 11)</code></pre>
+<pre class="python"><code>skate[&quot;goe&quot;] &gt; 2</code></pre>
+<pre><code>## aspect_id
+## 004e382688    False
+## 005bdf4588    False
+## 0070f9cc40    False
+## 0071f2e3ae    False
+## 007ae3fc4b    False
+##               ...  
+## ff96152a6c    False
+## ffa5ee8f76    False
+## ffac9b2f6a    False
+## ffc8eba079    False
+## fff0940a94    False
+## Name: goe, Length: 3405, dtype: bool</code></pre>
+<p>Finally, I used the reticulate package in R to demonstrate how python and R can talk to each other and share information across code chunks.</p>
+<p>By using alternating R and python code chunks, I created a joke exchange between the two. This is a more simple use of reticulate and much more complex things can be done using a combination of R and python. Regardless, please enjoy!</p>
+<pre class="r"><code>library(reticulate)
+hi &lt;- &quot;Good&quot;</code></pre>
+<pre class="python"><code>hi=&quot;afternoon!&quot;
+print(r.hi, hi)</code></pre>
+<pre><code>## Good afternoon!</code></pre>
+<pre class="r"><code>cat(c(hi,py$hi))</code></pre>
+<pre><code>## Good afternoon!</code></pre>
+<pre class="r"><code>knock &lt;- &quot;knock&quot;</code></pre>
+<pre class="python"><code>knock = &quot;knock&quot;
+print(r.knock, knock)</code></pre>
+<pre><code>## knock knock</code></pre>
+<pre class="python"><code>who = &quot;who&#39;s there?&quot;</code></pre>
+<pre class="r"><code>cat(c(py$who))</code></pre>
+<pre><code>## who&#39;s there?</code></pre>
+<pre class="r"><code>python &lt;- &quot;python&quot;</code></pre>
+<pre class="python"><code>python = &quot;python&quot;
+print(r.python)</code></pre>
+<pre><code>## python</code></pre>
+<pre class="python"><code>snake = &quot;ah! a snake!&quot;</code></pre>
+<pre class="r"><code>cat(c(py$snake))</code></pre>
+<pre><code>## ah! a snake!</code></pre>
+<p><img src="../../../../../img/snake.jpg" /></p>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../../../../js/docs.min.js"></script>
+<script src="../../../../../js/main.js"></script>
+
+<script src="../../../../../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

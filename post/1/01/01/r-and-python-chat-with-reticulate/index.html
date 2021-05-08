@@ -7,7 +7,7 @@
     <meta name="author" content="Tien Nguyen" />
     
     <link rel="shortcut icon" type="image/x-icon" href="../../../../../img/favicon.ico">
-    <title>Test Post</title>
+    <title>R and Python Chat With Reticulate</title>
     <meta name="generator" content="Hugo 0.83.1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../../../../../css/main.css" />
@@ -54,13 +54,13 @@
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="../../../../../post/2021/05/05/test-post/">Test Post</a></strong>
+            <strong><a href="../../../../../post/1/01/01/r-and-python-chat-with-reticulate/">R and Python Chat With Reticulate</a></strong>
           </h3>
         </div>
  
 <div class="blog-title">
           <h4>
-         May 5, 2021 
+         January 1, 0001 
             &nbsp;&nbsp;
             
           </h4>
@@ -72,9 +72,30 @@
               
 
 
-<p><a href="../../../../../project/project1/">Link to project 1</a></p>
-<p><a href="https://www.google.com">Link to google</a></p>
-<p><img src="../../../../../post/2021-05-05-test-post_files/597bb347b984afff21ed3840e69af171.jpeg" /></p>
+<p>I used the reticulate package in R to demonstrate how python and R can talk to each other and share information across code chunks.</p>
+<p>By using alternation R and python code chunks, I created a joke exchange between the two. This is a more simple use of reticulate and much more complex things can be done using a combination of R and python. Regardless, please enjoy!</p>
+<pre class="r"><code>library(reticulate)
+hi &lt;- &quot;Good&quot;</code></pre>
+<pre class="python"><code>hi=&quot;afternoon!&quot;
+print(r.hi, hi)</code></pre>
+<pre><code>## Good afternoon!</code></pre>
+<pre class="r"><code>cat(c(hi,py$hi))</code></pre>
+<pre><code>## Good afternoon!</code></pre>
+<pre class="r"><code>knock &lt;- &quot;knock&quot;</code></pre>
+<pre class="python"><code>knock = &quot;knock&quot;
+print(r.knock, knock)</code></pre>
+<pre><code>## knock knock</code></pre>
+<pre class="python"><code>who = &quot;who&#39;s there?&quot;</code></pre>
+<pre class="r"><code>cat(c(py$who))</code></pre>
+<pre><code>## who&#39;s there?</code></pre>
+<pre class="r"><code>python &lt;- &quot;python&quot;</code></pre>
+<pre class="python"><code>python = &quot;python&quot;
+print(r.python)</code></pre>
+<pre><code>## python</code></pre>
+<pre class="python"><code>snake = &quot;ah! a snake!&quot;</code></pre>
+<pre class="r"><code>cat(c(py$snake))</code></pre>
+<pre><code>## ah! a snake!</code></pre>
+<p><img src="../../../../../img/snake.jpg" /></p>
 
             
         <hr>         <div class="related-posts">
